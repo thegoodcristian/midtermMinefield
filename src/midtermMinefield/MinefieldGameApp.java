@@ -14,7 +14,7 @@ public class MinefieldGameApp extends MinefieldGame {
 		MinefieldGame minefield = new MinefieldGame();
 
 		minefield.createBoard();
-		minefield.placeMines(30);
+		minefield.placeMines(5);
 
 		System.out.println("Please enter a column: ");
 		userColumn = scnr.nextInt();

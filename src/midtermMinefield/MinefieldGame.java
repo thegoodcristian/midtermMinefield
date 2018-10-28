@@ -13,25 +13,51 @@ public class MinefieldGame {
 	// return [column][row];
 	// }
 
-	String[][] board = new String[10][10];
+	String[][] board = new String[12][12];
+	String[][] overlay = new String[12][12];
 
 	public void createBoard() {
 
 		// runs along every cell of the board
+		
+		
+		
 
 		while (row <= board.length - 1) {
 
 			for (column = 0; column < board.length; column++) {
 
 				board[column][row] = unPressed;
+				board[column][0] = " ";
+				board[0][row] = " ";
+				board[column][11] = " ";
+				board[11][row] = " ";
 				System.out.print(board[column][row]);
-
+				
 			}
 			row++;
 			System.out.println("");
 		}
 
 	}
+
+//	public void createOverlay() {
+//
+//		// runs along every cell of the board
+//
+//		while (row <= board.length - 1) {
+//
+//			for (column = 0; column < board.length; column++) {
+//
+//				board[column][row] = unPressed;
+//				System.out.print(board[column][row]);
+//
+//			}
+//			row++;
+//			System.out.println("");
+//		}
+//
+//	}
 
 	public void placeMines(int numMines) {
 		for (int m = 0; m < numMines; m++) {
@@ -41,12 +67,17 @@ public class MinefieldGame {
 				column = (int) (10 * Math.random());
 				row = (int) (10 * Math.random());
 
-				// checks if a mine is present in a spot.
-				if (!(board[column][row].equalsIgnoreCase(" * "))) {
-					board[column][row] = " * ";
-					break;
-				}
+				// excludes buffer zones
+				if (column >= 1 && column <= 10) {
+					if (row >= 1 && row <= 10) {
 
+						// checks if a mine is present in a spot.
+						if (!(board[column][row].equalsIgnoreCase(" * "))) {
+							board[column][row] = " * ";
+							break;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -59,7 +90,8 @@ public class MinefieldGame {
 		// runs along every cell of the board
 		if (userOption.equalsIgnoreCase("FLAG")) {
 
-			board[userCol - 1][userRow - 1] = flagged;
+			board[userCol][userRow] = flagged;
+			overlay[userCol][userRow] = flagged;
 
 			while (row <= board.length - 1) {
 
@@ -74,7 +106,7 @@ public class MinefieldGame {
 
 		} else if (userOption.equalsIgnoreCase("UNCOVER")) {
 
-			if (board[userCol - 1][userRow - 1] == " * ") {
+			if (board[userCol][userRow] == " * ") {
 				System.out.println("GAME OVER");
 			} else if (!(board[userCol - 1][userRow - 1] == " * ")) {
 
@@ -82,7 +114,6 @@ public class MinefieldGame {
 				System.out.println(board[userCol][userRow]);
 				// TODO: Insert senseMines method
 
-				
 				while (row <= board.length - 1) {
 
 					for (column = 0; column < board.length; column++) {
@@ -92,9 +123,24 @@ public class MinefieldGame {
 					}
 					row++;
 					System.out.println("");
-			}
+				}
 
+				if (board[userCol][userRow] == " 0 ") {
 
+					senseMines(userCol, userRow);
+
+					while (row <= board.length - 1) {
+
+						for (column = 0; column < board.length; column++) {
+
+							System.out.print(board[column][row]);
+
+						}
+						row++;
+						System.out.println("");
+					}
+
+				}
 
 			}
 
@@ -114,26 +160,12 @@ public class MinefieldGame {
 					mineCounter++; // when mine is sensed, counter increases
 			}
 		}
-		board[column-1][row-1] = " " + Integer.toString(mineCounter) + " ";
+		board[column][row] = " " + Integer.toString(mineCounter) + " ";
 
-
-//
-//			public void senseMines() {
-//				for (int column = 1; column < overlay.length - 2; column++) { // checks entire array
-//					for (int row = 1; row < overlay.length - 2; row++) {
-//						if ((board[column][row] == getBlank()) == true) {
-//							mineCounter = 0; // counter variable
-//							for (int i = (column - 1); i <= (column + 1); i++) {
-//								for (int j = (row - 1); j <= (row + 1); j++) {
-//									if ((board[i][j] == getMine()) == true)
-//										mineCounter++; // when mine is sensed, counter increases
-//								}
-//							}
-//							overlay[column][row] = (char) getNumOfMines();
-//						}
-//					}
-//				}
-//			}
+//		if (board[column -1][row - 1].equalsIgnoreCase(" 0 ") && (row -1 < board.length)) {
+//			row++;
+//			senseMines(column, row);
+//		}
 
 	}
 }
