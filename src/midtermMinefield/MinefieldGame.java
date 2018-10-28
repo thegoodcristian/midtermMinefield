@@ -2,19 +2,23 @@ package midtermMinefield;
 
 public class MinefieldGame {
 
-	private int userDifficulty = 10;
+	static int userDifficulty = 0;
 	private String unPressed = " . ";
 	private String flagged = " F ";
 	private int row = 0;
 	private int column = 0;
 
-	String[][] board = new String[userDifficulty][userDifficulty];
+
 	
 	//public String[][] getTile(int column, int row) {
 		//return [column][row];
 	//}
 	
+	String[][] board = new String[10][10];
+	
 	public void createBoard() {
+		
+
 
 		// runs along every cell of the board
 
@@ -31,14 +35,18 @@ public class MinefieldGame {
 		}
 
 	}
-	
-	public void updateBoard() {
 
-		row = 0;
+	
+	public void updateBoard(int colIndex, int rowIndex, String userOption) {
+
 		column = 0;
+		row = 0;
+		
 		
 		// runs along every cell of the board
-		board[2][2] = flagged;
+		if (userOption.equalsIgnoreCase("FLAG")) {
+		
+		board[colIndex-1][rowIndex-1] = flagged;
 		
 		while (row <= board.length - 1) {
 
@@ -52,6 +60,7 @@ public class MinefieldGame {
 			System.out.println("");
 		}
 
+		}
 	}
 }
 
