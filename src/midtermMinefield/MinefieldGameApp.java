@@ -14,6 +14,7 @@ public class MinefieldGameApp extends MinefieldGame {
 		MinefieldGame minefield = new MinefieldGame();
 
 		minefield.createBoard();
+		minefield.placeMines(30);
 
 		System.out.println("Please enter a column: ");
 		userColumn = scnr.nextInt();
@@ -26,6 +27,9 @@ public class MinefieldGameApp extends MinefieldGame {
 		if (userOption.equalsIgnoreCase("FLAG")) {		
 			
 			minefield.updateBoard(userColumn, userRow, "FLAG");
+		} else if (userOption.equalsIgnoreCase("UNCOVER")) {
+			
+			minefield.updateBoard(userColumn, userRow, "UNCOVER");
 		}
 		
 
