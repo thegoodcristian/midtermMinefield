@@ -151,13 +151,13 @@ public class MinefieldGame {
 
 	}
 
-	int mineCounter = 0; // counter variable
+
 
 	public void senseMines(int column, int row) {
-
+		int mineCounter = 0; // counter variable
 		for (int i = (column - 1); i <= (column + 1); i++) {
 			for (int j = (row - 1); j <= (row + 1); j++) {
-				if ((board[i][j].equalsIgnoreCase(" * ")) == true)
+				if ((board[i][j].equalsIgnoreCase(mine)) == true)
 					mineCounter++; // when mine is sensed, counter increases
 			}
 		}
