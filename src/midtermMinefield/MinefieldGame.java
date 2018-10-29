@@ -78,8 +78,8 @@ public class MinefieldGame {
 			// loop continues until space is mined
 			while (true) {
 				int column, row = 0; // reset rows and columns to 0
-				column = (int) (10 * Math.random());
-				row = (int) (10 * Math.random());
+				column = (int) (userDifficulty * Math.random());
+				row = (int) (userDifficulty * Math.random());
 
 				// excludes buffer zones
 				if (column > 2 && column < board.length - 2) {
