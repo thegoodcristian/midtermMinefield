@@ -14,19 +14,18 @@ public class MinefieldGameApp extends MinefieldGame {
 		Scanner scnr = new Scanner(System.in);
 
 
-		System.out.println("Enter a difficulty level: EASY/MEDIUM/HARD");
-		difficulty = scnr.next();
+		difficulty = Validator.getString(scnr, "Enter a difficulty level: EASY/MEDIUM/HARD");
 		
 		if (difficulty.equalsIgnoreCase("EASY")) {
-			userDifficulty = 9;
+			userDifficulty = 10;
 		} else if (difficulty.equalsIgnoreCase("MEDIUM")) {
 			userDifficulty = 14;
 		} else if (difficulty.equalsIgnoreCase("HARD")) {
-			userDifficulty = 19;
+			userDifficulty = 18;
 		} else {
 			System.out.println("Invalid difficulty level!");
 		}
-		numOfMines = (((userDifficulty - 4)  * (userDifficulty - 4)) / 4);
+		numOfMines = (((userDifficulty - 4)  * (userDifficulty - 4)) / 10);
 		
 		MinefieldGame minefield = new MinefieldGame();
 		minefield.createBoard();
@@ -36,13 +35,11 @@ public class MinefieldGameApp extends MinefieldGame {
 
 	do {
 
-			System.out.println("Please enter a column: ");
-			userColumn = scnr.nextInt();
-			System.out.println("Please enter a row: ");
-			userRow = scnr.nextInt();
+			userColumn = Validator.getInt(scnr, "Please enter a column: ", 1, (userDifficulty - 4));
 
-			System.out.println("Would you like to flag a mine or uncover a cell?");
-			userOption = scnr.next();
+			userRow = Validator.getInt(scnr, "Please enter a row: ", 1, (userDifficulty - 4));
+
+			userOption = Validator.getString(scnr, "Would you like to flag a mine or uncover a cell?");
 			if (userOption.equalsIgnoreCase("FLAG")) {
 
 				minefield.updateBoard(userColumn, userRow, "FLAG");
@@ -50,6 +47,7 @@ public class MinefieldGameApp extends MinefieldGame {
 
 				minefield.updateBoard(userColumn, userRow, "UNCOVER");
 			}
+			
 			minefield.isFinished();
 		} while (!MinefieldGame.isFinished);
 }
