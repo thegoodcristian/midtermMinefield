@@ -14,26 +14,25 @@ public class MinefieldGameApp extends MinefieldGame {
 		MinefieldGame minefield = new MinefieldGame();
 
 		minefield.createBoard();
-		minefield.placeMines(5);
+		minefield.placeMines(30);
 
-		System.out.println("Please enter a column: ");
-		userColumn = scnr.nextInt();
-		System.out.println("Please enter a row: ");
-		userRow = scnr.nextInt();
+	do {
 
-		
-		System.out.println("Would you like to flag a mine or uncover a cell?");
-		userOption = scnr.next();
-		if (userOption.equalsIgnoreCase("FLAG")) {		
-			
-			minefield.updateBoard(userColumn, userRow, "FLAG");
-		} else if (userOption.equalsIgnoreCase("UNCOVER")) {
-			
-			minefield.updateBoard(userColumn, userRow, "UNCOVER");
-		}
-		
+			System.out.println("Please enter a column: ");
+			userColumn = scnr.nextInt();
+			System.out.println("Please enter a row: ");
+			userRow = scnr.nextInt();
 
+			System.out.println("Would you like to flag a mine or uncover a cell?");
+			userOption = scnr.next();
+			if (userOption.equalsIgnoreCase("FLAG")) {
 
-	}
+				minefield.updateBoard(userColumn, userRow, "FLAG");
+			} else if (userOption.equalsIgnoreCase("UNCOVER")) {
 
+				minefield.updateBoard(userColumn, userRow, "UNCOVER");
+			}
+			minefield.isFinished();
+		} while (!MinefieldGame.isFinished);
+}
 }

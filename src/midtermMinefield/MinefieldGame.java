@@ -8,7 +8,8 @@ public class MinefieldGame {
 	private String flagged = " F ";
 	private int row = 0;
 	private int column = 0;
-
+	static boolean isFinished = false;
+	
 	// public String[][] getTile(int column, int row) {
 	// return [column][row];
 	// }
@@ -108,7 +109,7 @@ public class MinefieldGame {
 
 			if (board[userCol][userRow] == " * ") {
 				System.out.println("GAME OVER");
-			} else if (!(board[userCol - 1][userRow - 1] == " * ")) {
+			} else if (!(board[userCol][userRow] == " * ")) {
 
 				senseMines(userCol, userRow);
 				System.out.println(board[userCol][userRow]);
@@ -154,8 +155,8 @@ public class MinefieldGame {
 
 	public void senseMines(int column, int row) {
 
-		for (int i = (column - 2); i <= (column); i++) {
-			for (int j = (row - 2); j <= (row); j++) {
+		for (int i = (column - 1); i <= (column + 1); i++) {
+			for (int j = (row - 1); j <= (row + 1); j++) {
 				if ((board[i][j].equalsIgnoreCase(" * ")) == true)
 					mineCounter++; // when mine is sensed, counter increases
 			}
@@ -168,4 +169,25 @@ public class MinefieldGame {
 //		}
 
 	}
+
+	
+	public boolean isFinished() {
+		int unvisited = 0; // num of unvisited locations
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[0].length; j++) {
+				if (board[i][j].equals(" . ") == true)
+					unvisited++; // increments for each un-cleared location
+			}
+		}
+		if (unvisited == 0) {
+			System.out.println("You win!");
+			isFinished = true;
+			
+		}
+		return isFinished;
+		
+}
+	
+	
+	
 }
