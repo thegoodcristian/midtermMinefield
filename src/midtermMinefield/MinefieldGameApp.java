@@ -7,15 +7,32 @@ public class MinefieldGameApp extends MinefieldGame {
 	public static void main(String[] args) {
 		int userColumn;
 		int userRow;
+		int numOfMines;
 		String userOption;
+		String difficulty;
 
 		Scanner scnr = new Scanner(System.in);
 
-		MinefieldGame minefield = new MinefieldGame();
 
+		System.out.println("Enter a difficulty level: EASY/MEDIUM/HARD");
+		difficulty = scnr.next();
+		
+		if (difficulty.equalsIgnoreCase("EASY")) {
+			userDifficulty = 9;
+		} else if (difficulty.equalsIgnoreCase("MEDIUM")) {
+			userDifficulty = 14;
+		} else if (difficulty.equalsIgnoreCase("HARD")) {
+			userDifficulty = 19;
+		} else {
+			System.out.println("Invalid difficulty level!");
+		}
+		numOfMines = (((userDifficulty - 4)  * (userDifficulty - 4)) / 4);
+		
+		MinefieldGame minefield = new MinefieldGame();
 		minefield.createBoard();
 		minefield.createOverlay();
-		minefield.placeMines(5);
+		
+		minefield.placeMines(numOfMines);
 
 	do {
 
