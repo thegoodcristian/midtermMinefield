@@ -15,7 +15,7 @@ public class MinefieldGameApp extends MinefieldGame {
 
 		minefield.createBoard();
 		minefield.createOverlay();
-		minefield.placeMines(30);
+		minefield.placeMines(5);
 
 	do {
 
