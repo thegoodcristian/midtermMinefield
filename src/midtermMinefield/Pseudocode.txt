@@ -1,0 +1,183 @@
+README PSUEDOCODE
+
+PsuedoCode for Minefield
+
+======================================================================
+
+This program will allow the user to play a version of minesweeper. 
+
+The progam will create a game board (10x10 for testing purposes) that contains 
+info on mine placement and tiles adjacent to those mines.
+
+An overlay will be created that is able to be manipulated by the users commands 
+(changing tiles from checked to unchecked, adding flag over suspected mines, 
+and displaying adjacent bomb counts for unmined tiles)
+
+If the user selects a tile with a mine, the game is over and the user loses.
+
+If the user selects a tile with that is not a mine but has adjacent mines, 
+it will diplay the # of adj. mines and check the tile.
+
+If the user selects a tile without any adjacent mines then it will check all 
+neighboring spaces with no adjacent mines and contiue
+checking all contiguous tiles that have no adjacent mines.
+This process will be continued until a mine is encountered an then the space 
+adjecent to the mine will be checked and display the # of adjacent mines.
+
+Once all spaces that are not mines have been uncovered and only mined spaces remain, 
+the user will have won and the game will cease.
+
+==================================================================================
+Minefield App (This Class will include the main and static variables.) Extends MinefieldGame.
+
+Create an instance of the Minefield game object.
+
+Create an instance of the Scanner object.
+
+Initialize int variable for rows.
+Initialize int vairiable for columns.
+Initialize String variable for userOption.
+Initialize int for userDifficulty.
+
+Create the game board 
+	> Call the placeMines method to add mines to random tiles.
+	> Call the adjMine method to assign the # of adjacent mines to this tile.
+	> Call the generateBoard method to sysout a 10x10 overlay that shows the user
+	a game board while obscuring the changes made in the the placeMines or adjMines methods.
+
+Create a board by calling the createBoard method.
+Place mines by hardcoding. Change this after we have tested the program so the user can select 
+the difficulty.
+
+Create a do/ while loop that ends when isFinished is true.
+
+Print "Please enter a row: "
+Assign scan to the int row.
+Print "Please enter a column: "
+Assign scan to the int column.
+
+Print "Would you like to flag or uncover?"
+Assign to scan to the String userChoice.
+
+If the user selects FLAG, place a flag using the update board method.
+If the user selects UNCOVER, reveal the tile using the update board method.
+
+If MinefieldGame is finished, end the loop.
+
+==================================================================================
+
+MinefieldGame Class
+
+// Intialize userDifficulty to 3; This should be changed later once difficulty option is added.
+Initialize String Array[][]board.
+Inititialize String Array[][]overlay.
+Inititialize booleanisFinished.
+Inititialize private String unPressed, assign a character.
+//This will represent all tiles on the board before the first input.
+Inititialize private String mine, assign a character.
+Inititialize private String noMines, assign a character.
+Inititialize private String noAdjMines, assign a character.
+Inititialize private int mineCounter.
+
+Create a no argument constructor for MinefieldGame
+
+***Create method createBoard
+Initialize int row, assign to 0.
+Initialize int column, assign to 0.
+
+Create a board using a nested for loop.
+for the board's length(10), column will increase by 1.
+for the board's width(10), rows will increase by 1.
+
+Assign String board[column][row] = unPressed.
+Assing String overlay[column][row] = unPressed.
+//This doesn't include tile buffer on the sides.
+
+***Create a void method generateOverlay which takes in a String array.
+//We might consider putting this in it's own Class. Methods that handle the behavior of 
+//tiles could then call this method to alter overlay after each input is given.
+
+Use nested for loops to create the overlay that is going to be updated
+after each user input.
+for (starting at 0, as long as column is less than 10(length of overlay), increment column
+for (starting at 0, as long as row is less than 10(width of overlay), increment row)
+Print a space between the iteration of each line.
+
+Outside of the loop, print ovelay columns and rows. 
+
+***Create void method placeMines.
+Use a for loop with a nested while loop to sift through the array. Use math.random * 10 to generate mines.
+Use if /thens to ensure that mines are not duplicated.
+
+***Create a void method reactUserInput
+Use this method to select, uncover or flag a tile. This method will call methods in the Tile class.
+
+Call the hasMine method from the Tile Class. If hasMine is true, the user has lost. This will assign 
+isFinished to true and isWinner to false. Print "you lose" to the user.
+
+Call the hasAdj method from the Tile Class. If the hasAdj method is true, print numAdj to the 
+respective coordinates.
+
+==========================================================================================
+
+Tile Class
+
+***Create a method tileObject
+
+Call hasMine
+Call hasAdj
+Call numAdj
+Call isVisited
+
+//This is where the behavior of each particlular tile can be manipulated.
+//It may work better to split this into several methods each dicatating 
+//how a tile will behave. It will also determine the variable's position 
+//in relation the adjacent tiles (mineCounter).
+//What should this method return? Which parameters are needed?
+
+***Create a boolean method hasMine which takes the hardcoded # of mines from the main.
+//This can be changed later so the user can choose # of mines.
+//We could maybe use this as an int method if needed.
+
+Nested for while loop using Math.random*10 for each row and column will assign
+mines randomly to the board. Assign a position of 0 or 1, representing whether
+or not that position has a bomb or not. Assign this to int isMine.
+
+If isMine is 0, the return false.
+
+If isMine 1, then return true.
+
+***Create a boolean method hasAdj, taking in overlay.
+
+Use nested for / while loops to cycle through the array. On each square, search the adjacent squares
+using row-1, column-1, row-1, column, etc. 
+
+If an adjacent mine is discovered, return hasAdj as true.
+
+***Create an int method numAdj, taking in overlay.
+
+Use nested for loops to cycle through the array. One each square, check the surrounding 8 tiles and increment 
+mineCounter after each mine is found. This method should call itself recursively to ensure that the method 
+continues sifting though tiles until it arrives at a mine.
+
+Return int MineCounter.
+
+***Create booelan method senseMines
+Use nested for loops to sift though the array and assign a true or false to tiles bordering mines.
+
+
+***Create method isFinished
+This will end the game if the user hits a mine or if all non-mine squares have been visited or if all mines have been 
+flagged.
+
+
+
+
+
+
+
+fix array index out of bounds exception of when we select a corner.
+create validator class for user input.
+test to ensure that we can win the game.
+When the user loses, we need to exit the loop.
+
