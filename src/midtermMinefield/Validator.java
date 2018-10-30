@@ -18,10 +18,12 @@ public class Validator extends MinefieldGame {
 		while (isValid == false) {
 			System.out.print(prompt);
 			if (sc.hasNextInt()) {
+				
 				i = sc.nextInt();
+				if (i <= (userDifficulty - 4) && i > 0)
 				isValid = true;
 			} else {
-				System.out.println("Error! Invalid integer value. Try again.");
+				System.out.println("Error! Invalid cell value. Try again.");
 			}
 			sc.nextLine(); // discard any other data entered on the line
 		}
